@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Game Selection</title>
+  <style>
+    /* General Styles */
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background-color: #bcb6c343;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    /* Header Section */
+    .header {
+      background-color: #bcb6c343;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      width: 100%;
+      position: fixed;
+      top: 0;
+      z-index: 10;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .logo {
+      margin-right: 50px;
+    }
+
+    .navbar {
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-links {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      gap: 30px;
+    }
+
+    .nav-button {
+      text-decoration: none;
+      font-family: 'Calibri', sans-serif;
+      font-size: 18px;
+      font-weight: bold;
+      color: #333;
+      position: relative;
+      padding: 10px;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .nav-button:hover {
+      color: #020202;
+    }
+
+    .nav-button::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 2px;
+      background-color: #070707;
+      transition: width 0.3s ease-in-out;
+    }
+
+    .nav-button:hover::after {
+      width: 100%;
+    }
+
+    /* Game Options Section */
+    .content {
+      margin-top: 150px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      animation: fadeIn 1s ease-out forwards;
+      width: 80%;
+    }
+
+    .game-container {
+      display: flex;
+      justify-content: space-around;
+      gap: 40px;
+      width: 100%;
+    }
+
+    .game-option {
+      text-align: center;
+      cursor: pointer;
+      opacity: 0;
+      animation: slideIn 0.8s ease-out forwards;
+    }
+
+    .game-option:nth-child(1) {
+      animation-delay: 0.5s;
+    }
+
+    .game-option:nth-child(2) {
+      animation-delay: 0.7s;
+    }
+
+    .game-option img {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .game-option img:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+    }
+
+    /* Title for Game Options */
+    .game-option h2 {
+      font-size: 30px;
+      font-family: 'Algerian', sans-serif;
+      margin-top: 15px;
+      color: #333;
+    }
+
+    /* Header Text - Select Your Choice */
+    .select-choice {
+      font-family: 'Georgia', serif;
+      font-size: 36px;
+      color: #333;
+      margin-bottom: 30px;
+    }
+
+    .game-option a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* Additional Descriptive Text */
+    .description {
+      margin-top: 10px;
+      font-size: 18px;
+      color: #555;
+      max-width: 200px;
+      line-height: 1.5;
+      font-family: 'Georgia', serif;
+    }
+
+    /* Keyframes for Animations */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateY(50px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes zoomIn {
+      from {
+        transform: scale(1);
+        opacity: 0.5;
+      }
+      to {
+        transform: scale(3);
+        opacity: 1;
+      }
+    }
+
+  </style>
+</head>
+<body>
+  <!-- Header Section -->
+  <header class="header">
+    <div class="logo">
+      <img src="../images/logo.png" alt="Logo" width="100">
+    </div>
+    <nav class="navbar">
+      <ul class="nav-links">
+        <li><a href="#home" class="nav-button">Home</a></li>
+        <li><a href="#about" class="nav-button">About</a></li>
+        <li><a href="#contact" class="nav-button">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Game Selection Section -->
+  <div class="content">
+    <div class="select-choice">Select Your Choice</div>
+
+    <div class="game-container">
+      <!-- Quiz Game -->
+      <div class="game-option">
+        <button onclick="window.location.href = '/quiz_game';" style="border: none; background: none; padding: 0;">
+          <img src="{{ url_for('static', filename='images/quiz.jpg') }}" alt="Quiz">
+          <h2>Quiz Game</h2>
+          <p class="description">Where Knowledge Meets the Thrill of the Chase!</p>
+        </button>
+      </div>
+
+      <!-- Code Challenge -->
+      <div class="game-option">
+        <button onclick="window.location.href = '/quiz_game';" style="border: none; background: none; padding: 0;">
+          <img src="{{ url_for('static', filename='images/code.jpg') }}" alt="Code">
+          <h2>Code Challenge</h2>
+          <p class="description">Where Brains Meet Code: Challenge Yourself Today!</p>
+        </button>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

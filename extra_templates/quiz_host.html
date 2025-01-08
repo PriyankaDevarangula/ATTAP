@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Host Quiz - Select a Topic</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #e6e6fa; /* Light purple background */
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      background-color: #d8bfd8; /* Slightly darker purple for header */
+      text-align: center;
+      padding: 20px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 24px;
+      font-family: 'Georgia', serif;
+      color: #29469e; /* Darker purple text */
+    }
+
+    .content {
+      display: flex;
+      flex: 1;
+    }
+
+    .left-pane {
+      width: 75%;
+      padding: 20px;
+      border-right: 2px solid #d8bfd8;
+      box-sizing: border-box;
+    }
+
+    .right-pane {
+      width: 25%;
+      padding: 20px;
+      box-sizing: border-box;
+      background-color: #f8f8ff; /* Light gray */
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .search-bar {
+      margin-bottom: 20px;
+    }
+
+    .search-bar input {
+      width: 50%; /* Reduced size */
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+
+    h2 {
+      font-size: 28px;
+      font-family: 'Algerian', sans-serif;
+      margin-bottom: 20px;
+      color: #261977; /* Dark purple */
+    }
+
+    .topics-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr); /* 2 columns for topics */
+      gap: 20px; /* Increased gap */
+    }
+
+    .topic-card {
+      background-color: #315099; /* Dark purple for buttons */
+      color: #fff;
+      padding: 15px; /* Reduced padding */
+      border-radius: 8px;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      transition: transform 0.2s, background-color 0.3s;
+      font-size: 16px; /* Font size kept intact */
+    }
+
+    .topic-card:hover {
+      background-color: #5d3fd3; /* Slightly lighter purple on hover */
+      transform: scale(1.05);
+    }
+
+    .topic-card h3 {
+      margin: 0;
+      font-family: 'Calibri', sans-serif;
+      font-size: 16px; /* Font size kept intact */
+    }
+
+    .right-pane h3 {
+      font-size: 22px;
+      color: #2e5b79; /* Dark purple */
+    }
+
+    .selected-topics {
+      flex: 1;
+      overflow-y: auto;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background-color: #fff;
+      margin-bottom: 10px;
+    }
+
+    .selected-topics div {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 5px;
+      padding: 5px;
+      border-bottom: 1px solid #ccc;
+    }
+
+    .selected-topics div:last-child {
+      margin-bottom: 0;
+    }
+
+    .selected-topics span {
+      font-size: 14px;
+    }
+
+    .remove-btn {
+      background-color: rgb(231, 149, 199);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 4px 8px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .remove-btn:hover {
+      background-color: rgb(219, 167, 200);
+    }
+
+    .submit-button {
+      text-align: center;
+    }
+
+    .submit-button button {
+      background-color: #3c5bb0;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .submit-button button:hover {
+      background-color: #5d3fd3;
+    }
+
+    footer {
+      background-color: #d8bfd8; /* Slightly darker purple */
+      text-align: center;
+      padding: 10px;
+      font-size: 14px;
+      font-family: Arial, sans-serif;
+      color: #333;
+      box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Host Quiz - Select a Topic</h1>
+  </header>
+  <div class="content">
+    <div class="left-pane">
+      <div class="search-bar">
+        <input type="text" id="search" placeholder="Search for topics..." oninput="filterTopics()">
+      </div>
+      <h2>Choose a Topic</h2>
+      <div class="topics-grid" id="topicsGrid">
+        <div class="topic-card" onclick="selectTopic('Arrays')"><h3>Arrays</h3></div>
+        <div class="topic-card" onclick="selectTopic('SQL')"><h3>SQL</h3></div>
+        <div class="topic-card" onclick="selectTopic('Linked Lists')"><h3>Linked List</h3></div>
+        <div class="topic-card" onclick="selectTopic('Strings')"><h3>Strings</h3></div>
+        <div class="topic-card" onclick="selectTopic('C Language')"><h3>C</h3></div>
+        <div class="topic-card" onclick="selectTopic('Python Language')"><h3>Python</h3></div>
+        <div class="topic-card" onclick="selectTopic('Java')"><h3>Java</h3></div>
+        <div class="topic-card" onclick="selectTopic('HTML')"><h3>HTML</h3></div>
+        <div class="topic-card" onclick="selectTopic('CSS')"><h3>CSS</h3></div>
+        <div class="topic-card" onclick="selectTopic('JavaScript')"><h3>JavaScript</h3></div>
+        <div class="topic-card" onclick="selectTopic('Data Structures')"><h3>Data Structures</h3></div>
+        <div class="topic-card" onclick="selectTopic('Algorithms')"><h3>Algorithms</h3></div>
+        <div class="topic-card" onclick="selectTopic('Trees')"><h3>Trees</h3></div>
+        <div class="topic-card" onclick="selectTopic('Graphs')"><h3>Graphs</h3></div>
+        <div class="topic-card" onclick="selectTopic('Ruby')"><h3>Ruby</h3></div>
+        <div class="topic-card" onclick="selectTopic('Dynamic Programming')"><h3>Dynamic Programming</h3></div>
+        <div class="topic-card" onclick="selectTopic('Pattern Programming')"><h3>Pattern Programming</h3></div>
+        <div class="topic-card" onclick="selectTopic('Stack')"><h3>Stack</h3></div>
+      </div>
+    </div>
+    <div class="right-pane">
+      <h3>Selected Topics</h3>
+      <div class="selected-topics" id="selectedTopics"></div>
+      <div class="submit-button">
+        <button onclick="submitTopics()">Submit</button>
+      </div>
+    </div>
+  </div>
+  <footer>&copy; 2024 Quiz Game Platform</footer>
+
+  <script>
+    const selectedTopicsList = [];
+  
+    function selectTopic(topic) {
+      if (!selectedTopicsList.includes(topic)) {
+        selectedTopicsList.push(topic);
+        displaySelectedTopics();
+      }
+    }
+  
+    function removeTopic(topic) {
+      const index = selectedTopicsList.indexOf(topic);
+      if (index > -1) {
+        selectedTopicsList.splice(index, 1);
+        displaySelectedTopics();
+      }
+    }
+  
+    function displaySelectedTopics() {
+      const selectedTopicsDiv = document.getElementById('selectedTopics');
+      selectedTopicsDiv.innerHTML = '';
+      selectedTopicsList.forEach(topic => {
+        const topicDiv = document.createElement('div');
+        const topicSpan = document.createElement('span');
+        topicSpan.textContent = topic;
+  
+        const removeButton = document.createElement('button');
+        removeButton.textContent = 'X';
+        removeButton.className = 'remove-btn';
+        removeButton.onclick = () => removeTopic(topic);
+  
+        topicDiv.appendChild(topicSpan);
+        topicDiv.appendChild(removeButton);
+        selectedTopicsDiv.appendChild(topicDiv);
+      });
+    }
+  
+    function filterTopics() {
+      const searchInput = document.getElementById('search').value.toLowerCase();
+      const topics = document.querySelectorAll('.topic-card');
+      topics.forEach(topic => {
+        const topicName = topic.textContent.toLowerCase();
+        topic.style.display = topicName.includes(searchInput) ? 'block' : 'none';
+      });
+    }
+  
+    function submitTopics() {
+      if (selectedTopicsList.length > 0) {
+        const queryParams = selectedTopicsList.map(encodeURIComponent).join(',');
+        window.location.href = `{{ url_for('select_questions') }}?topics=${queryParams}`;
+      } else {
+        alert('No topics selected!');
+      }
+    }
+  </script>
+</body>
+</html>

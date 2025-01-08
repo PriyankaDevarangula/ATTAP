@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Game</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Algerian&display=swap');
+
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background-color: #a48ebc43;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    .quiz-title {
+      font-size: 48px;
+      font-weight: bold;
+      color: #9565c3;
+      margin: 0;
+      font-family: 'Algerian', sans-serif;
+      text-align: center;
+      letter-spacing: 5px;
+      visibility: hidden;
+      position: absolute;
+      top: 5%;
+    }
+
+    .header {
+      background-color: #bcb6c343;
+      width: 100%;
+      padding: 10px;
+      text-align: center;
+      font-size: 32px;
+      font-family: 'Times New Roman', serif;
+      color: #333;
+    }
+
+    .option-container {
+      margin-top: 50px;
+      width: 80%;
+    }
+
+    .option-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 100px;
+      position: relative;
+    }
+
+    .line {
+      flex-grow: 1;
+      height: 3px;
+      background-color: #000;
+    }
+
+    .option-text {
+      font-family: 'Castellar', serif;
+      font-size: 22px;
+      font-weight: bold;
+      color: #222;
+      margin-bottom: 10px;
+      text-align: left;
+      position: absolute;
+      top: -40px;
+      left: 0;
+    }
+
+    .host-button, .join-button {
+      background-color: #d0d3f2;
+      padding: 10px 20px;
+      font-size: 18px;
+      font-weight: bold;
+      border-radius: 5px;
+      color: #333;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      position: absolute;
+      right: 0;
+      top: -50px;
+    }
+
+    .host-button:hover, .join-button:hover {
+      background-color: #bcc4da;
+    }
+  </style>
+</head>
+<body>
+  <div class="quiz-title" id="quizTitle"></div>
+
+  <div class="header">
+    Where Knowledge Meets the Thrill of the Chase!
+  </div>
+
+  <div class="option-container">
+    <div class="option-line">
+      <div class="line"></div>
+    </div>
+
+    <div class="option-line">
+      <span class="option-text">1. Host a Game</span>
+      <button class="host-button" onclick="window.location.href='/question_selector';">Host</button>
+      <div class="line"></div>
+    </div>
+
+    <div class="option-line">
+      <span class="option-text">2. Join a Room</span>
+      <button class="join-button" onclick="window.location.href='/student_room';">Join</button>
+
+      <div class="line"></div>
+    </div>
+  </div>
+
+  <script>
+    const quizTitleElement = document.getElementById("quizTitle");
+    const text = "Quiz Game";
+    let index = 0;
+
+    function typeLetterByLetter() {
+      if (index < text.length) {
+        quizTitleElement.textContent += text.charAt(index);
+        quizTitleElement.style.visibility = "visible";
+        index++;
+        setTimeout(typeLetterByLetter, 200); // Adjust typing speed here
+      }
+    }
+
+    window.onload = typeLetterByLetter;
+  </script>
+</body>
+</html>

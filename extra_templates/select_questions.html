@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Select Questions for Quiz</title>
+  <style>
+    body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: url('{{ url_for('static', filename='images/display.jpg') }}') no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+            animation: fadeIn 1.5s;
+        }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    header {
+      text-align: center;
+      padding: 20px;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .content {
+      padding: 20px;
+    }
+
+    .topics-buttons {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .topics-buttons button {
+      background: none;
+      color: white;
+      padding: 10px 20px;
+      border: 2px solid white;
+      border-radius: 5px;
+      margin: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+
+    .topics-buttons button:hover {
+      transform: scale(1.1);
+    }
+
+    .questions-list {
+      margin-top: 20px;
+      animation: fadeIn 1.5s;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      border: 1px solid white;
+      padding: 10px;
+      text-align: left;
+    }
+
+    th {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    td input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      transform: scale(1.5);
+    }
+
+    .submit-button {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .submit-button button {
+      background: none;
+      color: white;
+      padding: 10px 20px;
+      border: 2px solid white;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .submit-button button:hover {
+      background-color: rgba(44, 83, 152, 0.8);
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+<body>
+  <header>Select Questions for the Quiz</header>
+
+  <div class="content">
+    <!-- Display selected topics as buttons -->
+    <div class="topics-buttons">
+      <h3>Selected Topics:</h3>
+      {% for topic in topics %}
+        <button onclick="loadQuestions('{{ topic }}')" id="topic-{{ loop.index0 }}">{{ topic }}</button>
+      {% endfor %}
+    </div>
+
+    <!-- Display questions dynamically -->
+    <div class="questions-list" id="questions-list">
+      <h3>Choose Questions:</h3>
+      <form id="questions-form">
+        <table id="questions-table">
+          <thead>
+            <tr>
+              <th>Select</th>
+              <th>Question</th>
+              <th>Options</th>
+              <th>Correct Answer</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Questions will be loaded dynamically -->
+          </tbody>
+        </table>
+        <div class="submit-button">
+          <button type="button" id="submitQuestions" onclick="submitQuestions()">Submit Selected Questions</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.min.js"></script>
+
+  <script>
+    const socket = io.connect();
+    const selectedQuestions = new Set();
+  
+    document.addEventListener('DOMContentLoaded', () => {
+      const firstTopicButton = document.querySelector('.topics-buttons button');
+      if (firstTopicButton) {
+        firstTopicButton.click();
+      }
+    });
+  
+    function loadQuestions(topic) {
+      fetch(`/fetch_questions?topic=${encodeURIComponent(topic)}`)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`Error fetching questions for topic: ${topic}`);
+          }
+          return response.json();
+        })
+        .then(data => {
+          const tbody = document.querySelector('#questions-table tbody');
+          tbody.innerHTML = '';
+  
+          if (data.questions.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="4">No questions available for ${topic}.</td></tr>`;
+            return;
+          }
+  
+          data.questions.forEach(question => {
+            const questionId = question[0];
+            const row = document.createElement('tr');
+  
+            row.innerHTML = `
+              <td><input type="checkbox" name="selected_questions" value="${questionId}" ${
+              selectedQuestions.has(questionId) ? 'checked' : ''
+              }></td>
+              <td>${question[2]}</td>
+              <td>
+                <ul>
+                  <li>${question[3]}</li>
+                  <li>${question[4]}</li>
+                  <li>${question[5]}</li>
+                  <li>${question[6]}</li>
+                </ul>
+              </td>
+              <td>${question[7]}</td>
+            `;
+  
+            const checkbox = row.querySelector('input[type="checkbox"]');
+            checkbox.addEventListener('change', () => {
+              if (checkbox.checked) {
+                selectedQuestions.add(questionId);
+              } else {
+                selectedQuestions.delete(questionId);
+              }
+            });
+  
+            tbody.appendChild(row);
+          });
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          const tbody = document.querySelector('#questions-table tbody');
+          tbody.innerHTML = `<tr><td colspan="4">Error loading questions. Please try again.</td></tr>`;
+        });
+    }
+  
+    function submitQuestions() {
+      const selectedQuestionsArray = Array.from(selectedQuestions);
+      socket.emit('create_room', { selectedQuestions: selectedQuestionsArray });
+    }
+  
+    socket.on('room_created', (data) => {
+      alert(`Room created! Room ID: ${data.room_id}`);
+      window.location.href = `/room?room_id=${data.room_id}`; // Ensure this is the correct path and format
+    });
+  </script>
+  
+</body>
+</html>

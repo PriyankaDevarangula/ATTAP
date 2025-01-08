@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Options</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #ffffff; /* White background */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 80%;
+      padding: 20px;
+    }
+
+    .section {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding: 15px;
+      transition: all 0.3s ease-in-out;
+      height: 300px; /* Box height */
+      border-radius: 8px; /* Rounded corners */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    }
+
+    .section:hover {
+      transform: scale(1.02);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .section img {
+      width: 100%; /* Ensures the image fills the box */
+      height: 100%; /* Ensures the image fills the box */
+      border-radius: 8px;
+      object-fit: cover; /* Ensures the image scales properly without distortion */
+      transition: transform 0.3s ease;
+    }
+
+    .section img:hover {
+      transform: scale(1.05);
+    }
+
+    .left-content,
+    .right-content {
+      width: 45%;
+      height: 100%; /* Ensures the content fills the section height */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .left-content h2,
+    .right-content h2 {
+      font-size: 22px; /* Slightly larger font size */
+      color: #333333;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    .left-content p,
+    .right-content p {
+      font-size: 16px; /* Slightly larger paragraph text */
+      color: #555555;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 10px;
+    }
+
+    .button-group button {
+      background-color: #6a9cb7; /* Green button color */
+      color: white; /* White button text */
+      font-size: 16px;
+      padding: 12px 20px; /* Improved button size */
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+
+    .button-group button:hover {
+      background-color: #86b6e2; /* Darker green on hover */
+      transform: scale(1.05);
+    }
+
+    .button-group button:active {
+      transform: scale(1);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- First Section: Add Questions -->
+    <div class="section">
+      <div class="left-content">
+        <img src="/static/images/add_questions.jpg" alt="Add Questions Image">
+      </div>
+      <div class="right-content">
+        <h2>Create Your Own Quiz</h2>
+        <p>Design a unique quiz tailored to your specific needs. Add your own questions, provide multiple-choice options, and designate the correct answer for each question. This gives you complete control over the quiz content and difficulty.</p>
+        <div class="button-group">
+          <button onclick="navigateTo('add_questions')">Create</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Second Section: Select Questions -->
+    <div class="section">
+      <div class="left-content">
+        <h2>Select Questions from Our Database</h2>
+        <p>Leverage our curated collection of programming-related questions. Choose from a variety of topics and difficulty levels to assemble a quiz quickly and efficiently. This option saves you time and effort in creating questions from scratch.</p>
+        <div class="button-group">
+          <button onclick="navigateTo('select_questions')">Select</button>
+        </div>
+      </div>
+      <div class="right-content">
+        <img src="/static/images/select_ques.jpg" alt="Select Questions Image">
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function navigateTo(action) {
+      if (action === 'add_questions') {
+        window.location.href = '/add_questions'; // Correct route for add_questions
+      } else if (action === 'select_questions') {
+        window.location.href = '/quiz_host'; // Correct route for quiz_host
+      }
+    }
+  </script>
+</body>
+</html>

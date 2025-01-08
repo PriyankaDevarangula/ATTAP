@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Host Room</title>
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+</head>
+<body>
+    <h1>Hosting Room</h1>
+    <p>Room ID: {{ room_id }}</p>
+    <h3>Players:</h3>
+    <ul id="players"></ul>
+    <script>
+        const socket = io();
+        const room_id = "{{ room_id }}";
+    
+        // Prompt the host to enter their username
+        const username = prompt("Enter your username as the host:");
+    
+        // Notify the server of the room join
+        socket.on('connect', () => {
+            socket.emit('join_room', { room_id: room_id, username: username });
+        });
+    
+        // Update the players list when new players join
+        socket.on('update_players', (data) => {
+            const playersList = document.getElementById('players');
+            playersList.innerHTML = '';
+            data.players.forEach(player => {
+                const li = document.createElement('li');
+                li.textContent = player;
+                playersList.appendChild(li);
+            });
+        });
+    </script>
+    
+</body>
+</html>

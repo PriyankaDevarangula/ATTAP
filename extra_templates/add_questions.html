@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Question</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #f9f9f9;
+    }
+
+    .form-container {
+      width: 60%;
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #555;
+    }
+
+    input[type="text"], textarea, select {
+      margin-bottom: 20px;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      width: 100%;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: #fff;
+      font-size: 16px;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #388E3C;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>Add a New Question</h2>
+    <form action="/submit_question" method="POST">
+      <label for="question">Question:</label>
+      <textarea id="question" name="question" rows="3" placeholder="Enter the question" required></textarea>
+
+      <label for="option1">Option 1:</label>
+      <input type="text" id="option1" name="option1" placeholder="Enter option 1" required>
+
+      <label for="option2">Option 2:</label>
+      <input type="text" id="option2" name="option2" placeholder="Enter option 2" required>
+
+      <label for="option3">Option 3:</label>
+      <input type="text" id="option3" name="option3" placeholder="Enter option 3" required>
+
+      <label for="option4">Option 4:</label>
+      <input type="text" id="option4" name="option4" placeholder="Enter option 4" required>
+
+      <label for="correct">Correct Answer:</label>
+      <select id="correct" name="correct" required>
+        <option value="" disabled selected>Select the correct answer</option>
+        <option value="option1">Option 1</option>
+        <option value="option2">Option 2</option>
+        <option value="option3">Option 3</option>
+        <option value="option4">Option 4</option>
+      </select>
+
+      <button type="submit">Submit Question</button>
+    </form>
+  </div>
+</body>
+</html>

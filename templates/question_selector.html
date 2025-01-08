@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Question</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body Styling */
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            background: linear-gradient(to right, #3a6073, #16222a);
+            color: #ffffff;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        /* Header Styling */
+        header {
+            text-align: center;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            font-size: 2.8rem;
+            font-weight: bold;
+            color: #ffb703;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Form Styling */
+        form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        label {
+            font-size: 1rem;
+            font-weight: bold;
+            color: #ffb703;
+        }
+
+        select, button {
+            padding: 10px 15px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            outline: none;
+            transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s;
+        }
+
+        select {
+            background-color: #ffb703;
+            color: #333;
+        }
+
+        select:hover {
+            box-shadow: 0 0 8px #ffb703;
+            transform: scale(1.05);
+        }
+
+        button {
+            background: linear-gradient(to right, #ffb703, #fb8500);
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            box-shadow: 0 0 8px #fb8500;
+            transform: scale(1.1);
+        }
+
+        /* Main Content Styling */
+        main {
+            max-width: 1100px;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            color: #ffffff;
+        }
+
+        thead {
+            background: linear-gradient(to right, #c47ec9, #834872);
+        }
+
+        thead th {
+            padding: 15px;
+            text-align: left;
+            font-size: 1.2rem;
+            color: #ffb703;
+            font-weight: bold;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        tbody tr:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        tbody td {
+            padding: 12px 15px;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        tbody tr:nth-child(odd) {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+
+        .choose-button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: bold;
+            color: #ffffff;
+            background: linear-gradient(to right, #7579c3, #5474c7);
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .choose-button:hover {
+            box-shadow: 0 0 10px #4caf50;
+            transform: scale(1.1);
+        }
+
+        .next-button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            background: linear-gradient(to right, #ffb703, #fb8500);
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .next-button:hover {
+            box-shadow: 0 0 10px #fb8500;
+            transform: scale(1.1);
+        }
+
+        /* Time Limit Styling */
+        .time-limit {
+            margin-top: 20px;
+            text-align: center;
+            color: #ffb703;
+        }
+
+        .time-limit input {
+            padding: 10px;
+            font-size: 1rem;
+            border-radius: 5px;
+            border: none;
+            outline: none;
+        }
+
+        /* Footer Styling */
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #ffb703;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Select a Question</h1>
+        <form method="get" action="{{ url_for('question_selector') }}">
+            <label for="language">Language:</label>
+            <select id="language" name="language">
+                <option value="Python">Python</option>
+                <option value="C">C</option>
+                <option value="C++">C++</option>
+                <option value="Java">Java</option>
+            </select>
+
+            <label for="topic">Topic:</label>
+            <select id="topic" name="topic">
+                <option value="Arrays">Arrays</option>
+                <option value="Loops">Loops</option>
+                <option value="Stacks">Stacks</option>
+                <option value="Queues">Queues</option>
+            </select>
+
+            <button type="submit">Filter</button>
+        </form>
+    </header>
+
+    <main>
+        <table>
+            <thead>
+                <tr>
+                    <th>Question</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if questions %}
+                    {% for question in questions %}
+                    <tr>
+                        <td>{{ question.title }}</td>
+                        <td>Pending</td>
+                        <td>
+                            <a href="#" class="choose-button">Choose</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="3">No questions available for the selected filters.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+
+        <div class="time-limit">
+            <label for="time">Set Time Limit:</label>
+            <select id="time" name="time">
+                <!-- Generate time options from 10 minutes to 600 minutes (10 hours) -->
+                {% for i in range(10, 601, 10) %}
+                    <option value="{{ i }}">{{ i }} min</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <a class="next-button" href="{{ url_for('create_room') }}">Next</a>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Your Platform. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>

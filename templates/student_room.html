@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Room</title>
+    <script src="https://cdn.jsdelivr.net/npm/socket.io-client/dist/socket.io.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        h1 {
+            color: #fff;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .container {
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            width: 400px;
+            text-align: center;
+        }
+
+        input[type="text"] {
+            width: 80%;
+            padding: 10px;
+            margin: 15px 0;
+            border-radius: 5px;
+            border: none;
+            outline: none;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            border: none;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .room-info {
+            background-color: #007bff;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 20px;
+            font-size: 18px;
+        }
+
+        .form-container {
+            display: block;
+        }
+
+        .form-container.hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Join Room</h1>
+
+        <!-- Join Room Form -->
+        <div class="form-container">
+            <form id="join_room_form">
+                <input type="text" id="room_id" name="room_id" placeholder="Enter Room ID" required>
+                <button type="submit">Join Room</button>
+            </form>
+        </div>
+
+        <!-- Display Room Information -->
+        <div id="room_info" class="room-info hidden">
+            <p><strong>Room ID:</strong> <span id="display_room_id"></span></p>
+            <p><strong>Room Name:</strong> <span id="display_room_name"></span></p>
+        </div>
+        
+        <!-- Game Messages -->
+        <div id="game_messages" class="hidden">
+            <p>Welcome to the game! Waiting for host...</p>
+        </div>
+    </div>
+
+    <script>
+        const socket = io.connect('http://' + document.domain + ':' + location.port);
+
+        // Listen for room creation event (from the host)
+        socket.on('room_created', function(data) {
+            console.log("Room Created by Host:", data);
+            document.getElementById('display_room_id').textContent = data.room_id;
+            document.getElementById('display_room_name').textContent = data.room_name;
+            document.getElementById('room_info').classList.remove('hidden');
+            document.getElementById('game_messages').classList.remove('hidden');
+        });
+
+        document.getElementById('join_room_form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const roomId = document.getElementById('room_id').value;
+    const username = prompt("Enter your name:");
+    if (roomId && username) {
+        // Store the username and room ID in localStorage
+        localStorage.setItem('username', username);
+        localStorage.setItem('room_id', roomId);
+        
+        // Redirect to the create_room page
+        window.location.href = `/create_room?room_id=${roomId}`;
+    }
+});
+
+    </script>
+</body>
+</html>
